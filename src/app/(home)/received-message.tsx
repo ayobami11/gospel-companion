@@ -111,7 +111,7 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
                   asChild
                 >
                   <div
-                    className="flex flex-wrap items-center gap-2.5 py-0.5 px-2 rounded-lg"
+                    className="flex items-center gap-2.5 py-0.5 px-2 rounded-lg"
                   >
                     <BookOpenText className="shrink-0" />
                     <div>

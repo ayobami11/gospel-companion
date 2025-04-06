@@ -128,7 +128,7 @@ export default function Home() {
       <FormProvider {...methods}>
         <Header />
 
-        <main className="flex-1">
+        <main className="flex-1 mt-32 md:mt-20">
           <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-68px)]">
             <div className="flex-1">
               {state.chat.length > 0 ? <ChatWindow /> : <NewChat />}
