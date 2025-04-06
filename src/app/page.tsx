@@ -1,7 +1,5 @@
 "use client"
 
-import { useSearchParams } from "next/navigation";
-
 import { MessageForm } from "@/app/(home)/message-form";
 import { ChatWindow } from "@/app/(home)/chat-window";
 import { Header } from "@/app/(home)/header";
@@ -16,9 +14,9 @@ import { instance as axios } from "@/lib/axios";
 import { useEffect } from "react";
 
 import { useAppContext } from "@/contexts";
-import { ActionTypes, KnowledgeBaseValues } from "@/actions";
+import { ActionTypes } from "@/actions";
 
-import { FormProvider, useFormContext } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
 
 const messageFormSchema = z.object({
@@ -34,20 +32,13 @@ const messageFormSchema = z.object({
 
 export default function Home() {
 
-  const searchParams = useSearchParams();
-  const inputKnowledgeBase = searchParams.get("knowledge_base") ?? "";
-
-  const validKnowledgeBase = ["e", "j", "s"];
-
-  const initialKnowledgeBase = validKnowledgeBase.includes(inputKnowledgeBase) ? inputKnowledgeBase : "j";
-
   const { state, dispatch } = useAppContext();
 
-  const methods = useForm({
+  const methods = useForm<z.infer<typeof messageFormSchema>>({
     resolver: zodResolver(messageFormSchema),
     defaultValues: {
       message: "",
-      knowledgeBase: initialKnowledgeBase as KnowledgeBaseValues
+      knowledgeBase: "j"
     },
   });
 
@@ -132,13 +123,9 @@ export default function Home() {
   }, [dispatch, knowledgeBase, state.userId]);
 
 
-
-
   return (
     <div className="flex flex-col min-h-screen">
       <FormProvider {...methods}>
-
-
         <Header />
 
         <main className="flex-1">
