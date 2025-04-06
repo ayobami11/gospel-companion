@@ -15,18 +15,18 @@ import { Send } from "lucide-react";
 import { instance as axios } from "@/lib/axios";
 
 import { useAppContext } from "@/contexts";
-import { ActionTypes, FormType, RagResponse } from "@/actions";
+import { ActionTypes, RagResponse } from "@/actions";
 
-interface MessageFormProps {
-    form: FormType
-}
+import { useFormContext } from "react-hook-form";
 
-export const MessageForm = ({ form }: MessageFormProps) => {
+export const MessageForm = () => {
+
+    const methods = useFormContext();
 
     const { state, dispatch } = useAppContext();
 
-    const question = form.getValues("message");
-    const knowledgeBase = form.getValues("knowledgeBase");
+    const question = methods.getValues("message");
+    const knowledgeBase = methods.getValues("knowledgeBase");
 
 
     async function onSubmit() {
@@ -46,7 +46,7 @@ export const MessageForm = ({ form }: MessageFormProps) => {
                     
                 })
                 
-                form.resetField("message");
+                methods.resetField("message");
                 // let referencesString: string = "";
                 // references?.map(
                 //     ({ topic, link }) => (referencesString += "\n" + topic + "\n" + link)
@@ -69,15 +69,15 @@ export const MessageForm = ({ form }: MessageFormProps) => {
 
     return (
         <div className="sticky bottom-0 max-w-[920px] w-full md:left-[calc(50%+310px)] bg-white dark:bg-[hsl(0,0%,3.9%)]">
-            <Form {...form}>
+            <Form {...methods}>
                 <form
                     id="message-form"
                     method="POST"
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmit={methods.handleSubmit(onSubmit)}
                     className="p-2 m-5 mt-0 flex rounded-2xl"
                 >
                     <FormField
-                        control={form.control}
+                        control={methods.control}
                         name="message"
                         render={({ field }) => (
                             <FormItem className="flex-1">
@@ -100,7 +100,7 @@ export const MessageForm = ({ form }: MessageFormProps) => {
                         <button
                             type="submit"
                             className="bg-green rounded-[0.625rem] p-2"
-                            onClick={() => console.log(form.formState.errors)}
+                            onClick={() => console.log(methods.formState.errors)}
                         >
                             <Send />
                             <span className="sr-only">Send message</span>

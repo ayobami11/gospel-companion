@@ -13,18 +13,17 @@ import {
     FormItem,
     FormMessage,
 } from "@/components/ui/form";
-import { FormType } from "@/actions";
 
-interface KnowledgeBaseProps {
-    form: FormType
-}
+import { useFormContext } from "react-hook-form";
 
-export const KnowledgeBase = ({ form }: KnowledgeBaseProps) => {
+export const KnowledgeBase = () => {
+
+    const methods = useFormContext();
 
     return (
-        <Form {...form}>
+        <Form {...methods}>
             <FormField
-                control={form.control}
+                control={methods.control}
                 name="knowledgeBase"
                 render={({ field }) => (
                     <FormItem className="flex-1">

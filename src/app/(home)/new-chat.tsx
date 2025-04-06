@@ -1,13 +1,8 @@
 "use client"
 
-import { FormType } from "@/actions";
 import { SampleQuestion } from "@/app/(home)/sample-question";
 
-interface NewChatProps {
-    form: FormType
-}
-
-export const NewChat = ({ form }: NewChatProps) => {
+export const NewChat = () => {
 
     const sampleQuestions = [
         "What is Salvation?",
@@ -23,7 +18,7 @@ export const NewChat = ({ form }: NewChatProps) => {
                     sampleQuestions.map((question, index) => {
                         return (
                             <li key={`sample-question-${index}`}>
-                                <SampleQuestion form={form} question={question} />
+                                <SampleQuestion question={question} />
                             </li>
                         )
                     })

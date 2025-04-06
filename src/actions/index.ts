@@ -2,11 +2,6 @@ import { UseFormReturn } from "react-hook-form";
 
 export type KnowledgeBaseValues = "e" | "j" | "s";
 
-export type FormType = UseFormReturn<{
-        knowledgeBase: KnowledgeBaseValues,
-        message: string
-      }, unknown, undefined>
-
 export interface References {
     topic: "";
     link: "";

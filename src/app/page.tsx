@@ -18,8 +18,10 @@ import { useEffect } from "react";
 import { useAppContext } from "@/contexts";
 import { ActionTypes, KnowledgeBaseValues } from "@/actions";
 
+import { FormProvider, useFormContext } from "react-hook-form";
 
-export const messageFormSchema = z.object({
+
+const messageFormSchema = z.object({
   knowledgeBase: z.enum(["e", "j", "s"], {
     message: "Please select a valid knowledge base.",
   }),
@@ -41,7 +43,7 @@ export default function Home() {
 
   const { state, dispatch } = useAppContext();
 
-  const form = useForm<z.infer<typeof messageFormSchema>>({
+  const methods = useForm({
     resolver: zodResolver(messageFormSchema),
     defaultValues: {
       message: "",
@@ -49,7 +51,7 @@ export default function Home() {
     },
   });
 
-  const knowledgeBase = form.getValues("knowledgeBase");
+  const knowledgeBase = methods.getValues("knowledgeBase");
 
   useEffect(() => {
 
@@ -134,18 +136,21 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <FormProvider {...methods}>
 
-      <Header form={form} />
 
-      <main className="flex-1">
-        <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-68px)]">
-          <div className="flex-1">
-            {state.chat.length > 0 ? <ChatWindow form={form} /> : <NewChat form={form} />}
+        <Header />
+
+        <main className="flex-1">
+          <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-68px)]">
+            <div className="flex-1">
+              {state.chat.length > 0 ? <ChatWindow /> : <NewChat />}
+            </div>
+
+            <MessageForm />
           </div>
-
-          <MessageForm form={form} />
-        </div>
-      </main>
+        </main>
+      </FormProvider>
     </div>
   );
 }

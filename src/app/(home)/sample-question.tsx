@@ -5,55 +5,58 @@ import { Button } from "@/components/ui/button";
 
 import { instance as axios } from "@/lib/axios";
 
-import { ActionTypes, FormType, type RagResponse } from "@/actions";
+import { ActionTypes, type RagResponse } from "@/actions";
 import { useAppContext } from "@/contexts";
 
+import { useFormContext } from "react-hook-form";
+
 interface SampleQuestionProps {
-    form: FormType,
-    question: string
+  question: string
 }
 
-export const SampleQuestion = ({ form, question }: SampleQuestionProps) => {
+export const SampleQuestion = ({ question }: SampleQuestionProps) => {
 
-    const { state, dispatch } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
-    const knowledgeBase = form.getValues("knowledgeBase");
+  const methods = useFormContext();
 
-    const sendSampleQuestion = async () => {
-    
-        try {
-          const { data, status } = await axios.post<RagResponse>(
-            `/rag-response/${state.userId}?query=${question}&knowledge_base=${knowledgeBase}`
-          );
-          if (status === 200) {
-    
-            dispatch({
-              type: ActionTypes.UPDATE_CHAT,
-              payload: {
-                question,
-                answer: data
-              }
-    
-            })
-    
-            form.resetField("message");
-          } else {
-            // throw error;
+  const knowledgeBase = methods.getValues("knowledgeBase");
+
+  const sendSampleQuestion = async () => {
+
+    try {
+      const { data, status } = await axios.post<RagResponse>(
+        `/rag-response/${state.userId}?query=${question}&knowledge_base=${knowledgeBase}`
+      );
+      if (status === 200) {
+
+        dispatch({
+          type: ActionTypes.UPDATE_CHAT,
+          payload: {
+            question,
+            answer: data
           }
-        } catch (error) {
-          console.error(`Chat Error: ${error}`);
-          // setError(error);
-        } finally {
-          // setIsLoading(false);
-        }
-    
-      }
 
-    return (
-        <Button
-            variant="outline"
-            className="p-2.5 rounded-[100px] text-base"
-            onClick={sendSampleQuestion}
-        >{question}</Button>
-    )
+        })
+
+        methods.resetField("message");
+      } else {
+        // throw error;
+      }
+    } catch (error) {
+      console.error(`Chat Error: ${error}`);
+      // setError(error);
+    } finally {
+      // setIsLoading(false);
+    }
+
+  }
+
+  return (
+    <Button
+      variant="outline"
+      className="p-2.5 rounded-[100px] text-base"
+      onClick={sendSampleQuestion}
+    >{question}</Button>
+  )
 }

@@ -4,14 +4,15 @@ import { Button } from "@/components/ui/button";
 
 import CopyButton from "@/app/(home)/copy-button";
 
-import { References, ActionTypes, RagResponse, FormType } from "@/actions";
+import { References, ActionTypes, RagResponse } from "@/actions";
 
 import { instance as axios } from "@/lib/axios";
 
 import ReactMarkdown from "react-markdown";
 
+import { useFormContext } from "react-hook-form";
+
 interface ReceivedMessageProps {
-  form: FormType,
   index: number,
   response: string,
   references: References[]
@@ -19,13 +20,15 @@ interface ReceivedMessageProps {
 
 import { useAppContext } from "@/contexts";
 
-const ReceivedMessage = ({ form, index, response, references }: ReceivedMessageProps) => {
+const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) => {
+
+  const methods = useFormContext();
 
   const { state, dispatch } = useAppContext();
 
   const regenerateResponse = async () => {
 
-    const knowledgeBase = form.getValues("knowledgeBase");
+    const knowledgeBase = methods.getValues("knowledgeBase");
 
     const question = state.chat.at(-1)?.question ?? "";
 
@@ -44,7 +47,7 @@ const ReceivedMessage = ({ form, index, response, references }: ReceivedMessageP
 
         })
 
-        form.resetField("message");
+        methods.resetField("message");
         // let referencesString: string = "";
         // references?.map(
         //     ({ topic, link }) => (referencesString += "\n" + topic + "\n" + link)
