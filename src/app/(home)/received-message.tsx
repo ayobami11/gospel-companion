@@ -2,11 +2,15 @@ import { BookOpenText, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // import { Separator } from "@/components/ui/separator";
 
+import { TypeAnimation } from "react-type-animation";
+
 import CopyButton from "@/app/(home)/copy-button";
 
 import { References, ActionTypes, RagResponse } from "@/actions";
 
 import { instance as axios } from "@/lib/axios";
+
+import {useState} from "react"
 
 import ReactMarkdown from "react-markdown";
 
@@ -19,8 +23,11 @@ interface ReceivedMessageProps {
 }
 
 import { useAppContext } from "@/contexts";
+import { format } from "path";
 
 const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) => {
+
+  const [showMarkdown, setShowMarkdown] = useState(false);
 
   const methods = useFormContext();
 
@@ -72,9 +79,26 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
     <div className="flex gap-5 self-start py-3">
       <div>
         <div>
-          <ReactMarkdown>
-            {response}
-          </ReactMarkdown>
+        {
+          !showMarkdown ? (
+            <TypeAnimation
+              cursor={false}
+              splitter={(str) => str.split(/(?= )/)}
+              style={{ whiteSpace: "pre-line" }}
+              sequence={[
+                response,
+                3000,
+                () => setShowMarkdown(true)
+              ]}
+              speed={{ type: "keyStrokeDelayInMs", value: 30 }}
+              omitDeletionAnimation={true}
+              repeat={Infinity}
+            />
+          ) : (
+            <ReactMarkdown>{response}</ReactMarkdown>
+          )
+        }
+
         </div>
         <div className="flex gap-4 my-4">
           <CopyButton
@@ -102,7 +126,7 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
 
         <div className="flex flex-wrap gap-3 items-center">
           <span className="text-[hsl(0,0%,54%)]">References</span>
-          <div className="space-y-3">
+          <div className="flex flex-wrap gap-3 max-w-[780px]">
             {references.map((reference) => {
               return (
                 <Button

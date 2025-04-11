@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react";
+
 import {
     Form,
     FormControl,
@@ -9,6 +11,7 @@ import {
 } from "@/components/ui/form";
 
 import { AutosizeTextarea } from "@/components/ui/autosize-textarea";
+import { Button } from "@/components/ui/button";
 
 import { Send } from "lucide-react";
 
@@ -19,7 +22,14 @@ import { ActionTypes, RagResponse } from "@/actions";
 
 import { useFormContext } from "react-hook-form";
 
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+
 export const MessageForm = () => {
+
+    const { toast } = useToast();
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const methods = useFormContext();
 
@@ -30,6 +40,16 @@ export const MessageForm = () => {
 
 
     async function onSubmit() {
+
+
+        dispatch({
+            type: ActionTypes.SET_PENDING_PROMPT,
+            payload: {
+                pendingPrompt: question
+            }
+        });
+        
+        setIsLoading(true);
 
         try {
             const { data, status } = await axios.post<RagResponse>(
@@ -43,9 +63,9 @@ export const MessageForm = () => {
                         question,
                         answer: data
                     }
-                    
+
                 })
-                
+
                 methods.resetField("message");
                 // let referencesString: string = "";
                 // references?.map(
@@ -60,15 +80,23 @@ export const MessageForm = () => {
             }
         } catch (error) {
             console.error(`Chat Error: ${error}`);
+            toast({
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+                action: <ToastAction 
+                altText="Try again"
+                onClick={onSubmit}
+                >Try again</ToastAction>
+            })
             // setError(error);
         } finally {
-            // setIsLoading(false);
+            setIsLoading(false);
         }
 
     }
 
     return (
-        <div className="sticky bottom-0 max-w-[920px] w-full md:left-[calc(50%+310px)] bg-white dark:bg-[hsl(0,0%,3.9%)]">
+        <div className="sticky bottom-0 max-w-[920px] w-full md:left-[calc(50%+310px)] bg-white dark:bg-[hsl(0,2%,6.5%)]">
             <Form {...methods}>
                 <form
                     id="message-form"
@@ -96,15 +124,15 @@ export const MessageForm = () => {
                             </FormItem>
                         )}
                     />
-                    <div className="flex items-end">
-                        <button
+                    <div className="flex items-end ml-3">
+                        <Button
                             type="submit"
-                            className="bg-green rounded-[0.625rem] p-2"
-                            onClick={() => console.log(methods.formState.errors)}
+                            className="rounded-[0.625rem] p-2"
+                            disabled={isLoading}
                         >
                             <Send />
                             <span className="sr-only">Send message</span>
-                        </button>
+                        </Button>
                     </div>
                 </form >
             </Form>

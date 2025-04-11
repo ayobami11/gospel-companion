@@ -22,6 +22,8 @@ export const ChatWindow = () => {
                     )
                 })
             }
+
+            {state.pendingPrompt.length > 0 ? <SentMessage message={state.pendingPrompt} /> : null}
         </div>
     )
 }

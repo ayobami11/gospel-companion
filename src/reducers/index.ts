@@ -5,7 +5,8 @@ import type { ChatProps } from "@/actions";
 export interface State {
     userId: string,
     message: string,
-    chat: ChatProps[]
+    chat: ChatProps[],
+    pendingPrompt: string
 };
 
 
@@ -51,7 +52,16 @@ export const reducer = (state: State, action: Actions) => {
 
             return {
                 ...state,
+                pendingPrompt: "",
                 chat: modifiedChat
+            }
+        }
+
+        case ActionTypes.SET_PENDING_PROMPT: {
+
+            return {
+                ...state,
+                pendingPrompt: action.payload.pendingPrompt
             }
         }
 
@@ -87,5 +97,6 @@ export const reducer = (state: State, action: Actions) => {
 export const initialState: State = {
     userId: "",
     message: "",
-    chat: []
+    chat: [],
+    pendingPrompt: ""
 }

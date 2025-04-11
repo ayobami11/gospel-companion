@@ -18,6 +18,9 @@ import { ActionTypes } from "@/actions";
 
 import { FormProvider } from "react-hook-form";
 
+import {Suspense} from "react";
+import {ChatWindowSkeleton} from "@/app/(home)/chat-window-skeleton";
+
 
 const messageFormSchema = z.object({
   knowledgeBase: z.enum(["e", "j", "s"], {
@@ -131,7 +134,11 @@ export default function Home() {
         <main className="flex-1 mt-32 md:mt-20">
           <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-68px)]">
             <div className="flex-1">
-              {state.chat.length > 0 ? <ChatWindow /> : <NewChat />}
+              {state.chat.length > 0 || state.pendingPrompt.length > 0 ? (
+                <Suspense fallback={<ChatWindowSkeleton />}>
+                  <ChatWindow />
+                </Suspense>
+               ) : <NewChat />}
             </div>
 
             <MessageForm />
