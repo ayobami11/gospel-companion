@@ -6,7 +6,8 @@ export interface State {
     userId: string,
     message: string,
     chat: ChatProps[],
-    pendingPrompt: string
+    pendingPrompt: string,
+    isNewChat: boolean
 };
 
 
