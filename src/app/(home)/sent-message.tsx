@@ -12,7 +12,7 @@ const SentMessage = ({ message }: { message: string }) => {
             behavior: "smooth"
         });
 
-    }, []);
+    }, [state.chat.length]);
 
     return (
         <div 

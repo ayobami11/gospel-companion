@@ -16,6 +16,8 @@ import ReactMarkdown from "react-markdown";
 
 import { useFormContext } from "react-hook-form";
 
+import remarkGfm from "remark-gfm";
+
 interface ReceivedMessageProps {
   index: number,
   response: string,
@@ -27,19 +29,19 @@ import { useAppContext } from "@/contexts";
 const keyStrokeDelayInMs = 30;
 
 const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) => {
-  
+
   const [showMarkdown, setShowMarkdown] = useState(false);
 
   const methods = useFormContext();
 
   const { state, dispatch } = useAppContext();
-  
+
   const regenerateResponse = async () => {
 
     const knowledgeBase = methods.getValues("knowledgeBase");
-    
+
     const question = state.chat.at(-1)?.question ?? "";
-    
+
     try {
       const { data, status } = await axios.post<RagResponse>(
         `/rag-response/${state.userId}?query=${question}&knowledge_base=${knowledgeBase}&regenerate=true`
@@ -59,24 +61,24 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
         setShowMarkdown(false);
       }
 
-      
+
     } catch (error) {
       console.error(`Chat Error: ${error}`);
     }
-    
+
   }
 
-    useEffect(() => {
-        window.scrollTo({
-            top: state.chat.length <= 1 ? 0 : document.body.scrollHeight,
-            behavior: "smooth"
-        });
+  useEffect(() => {
+    window.scrollTo({
+      top: state.chat.length <= 1 ? 0 : document.body.scrollHeight,
+      behavior: "smooth"
+    });
 
-    }, []);
-  
+  }, [state.chat.length]);
+
   return (
-    <div 
-    className="flex gap-5 self-start py-3"
+    <div
+      className="flex gap-5 self-start py-3"
     >
       <div>
         {
@@ -94,12 +96,23 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
               omitDeletionAnimation={true}
             />
           ) : (
-            <div className="whitespace-pre-line">
+            <>
               <ReactMarkdown
                 components={{
-                  ul: ({children}) => <ul className="list-disc list-inside">{children}</ul>,
-                  ol: ({children}) => <ol className="list-decimal list-inside">{children}</ol>
+                  p: ({ children }) => <p className="my-1.5">{children}</p>,
+                  ul: ({ children }) => <ul className="list-disc list-inside [&_p]:inline">{children}</ul>,
+                  ol: ({ children }) => <ol className="list-decimal list-inside [&_p]:inline">{children}</ol>,
+                  a: ({ children, href }) => <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-blue-500">{children}</a>,
+                  table: ({ children }) => <table className="border border-current">{children}</table>,
+                  th: ({ children }) => <th className="border border-current p-2">{children}</th>,
+                  td: ({ children }) => <td className="border border-current p-2">{children}</td>
+
                 }}
+                remarkPlugins={[remarkGfm]}
               >{response}</ReactMarkdown>
               <div className="flex gap-4 my-4">
                 <CopyButton
@@ -145,16 +158,16 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
                             rel="noopener noreferrer"
                             className="min-w-0 wrap-anywhere inline-block"
                           > {reference.topic}</a>
-                          </div>
+                        </div>
                       </Button>
 
                     )
                   })}
                 </div>
               </div>
-            </div>
+            </>
           )}
-        </div>
+      </div>
     </div>
   )
 }
