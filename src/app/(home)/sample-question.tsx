@@ -21,6 +21,7 @@ interface SampleQuestionProps {
 
 export const SampleQuestion = ({ question }: SampleQuestionProps) => {
 
+  const { toast } = useToast();
   const { state, dispatch } = useAppContext();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +32,6 @@ export const SampleQuestion = ({ question }: SampleQuestionProps) => {
 
   const sendSampleQuestion = async () => {
 
-    const { toast } = useToast();
 
         dispatch({
             type: ActionTypes.SET_PENDING_PROMPT,
