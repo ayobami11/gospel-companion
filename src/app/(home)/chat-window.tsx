@@ -6,7 +6,7 @@ import { useAppContext } from "@/contexts";
 
 import SentMessage from "@/app/(home)/sent-message";
 import ReceivedMessage from "@/app/(home)/received-message";
-import ReceivedMessageSkeleton from "@/app/(home)/received-message-skeleton";
+import { ReceivedMessageSkeleton } from "@/app/(home)/received-message-skeleton";
 
 
 export const ChatWindow = () => {

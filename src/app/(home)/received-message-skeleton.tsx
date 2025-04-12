@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const ChatWindowSkeleton = () => {
+export const ReceivedMessageSkeleton = () => {
     return (
         <div>
 
