@@ -2,15 +2,12 @@ import {useEffect, useRef} from "react";
 
 const SentMessage = ({ message }: { message: string }) => {
 
-    const sentMessageRef = useRef(null);
+    const sentMessageRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-
-        if (sentMessageRef.current) {
-            sentMessageRef.current.scrollIntoView({
-                behaviour: "smooth"
-            });
-        }
+        sentMessageRef.current?.scrollIntoView({
+            behaviour: "smooth"
+        });
 
     }, []);
 
