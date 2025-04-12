@@ -31,7 +31,7 @@ export const ChatWindow = () => {
 
             {/* flex parent is needed for self-end prop on flex item to work */}
             {state.pendingPrompt.length > 0 ? (
-                <div className="flex flex-col">
+                <div className="flex flex-col m-4">
                     <SentMessage message={state.pendingPrompt} />
                 </div> 
             ) : null}
