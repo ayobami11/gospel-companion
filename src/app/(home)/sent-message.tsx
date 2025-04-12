@@ -1,10 +1,14 @@
 import {useEffect} from "react";
 
+import { useAppContext } from "@/contexts";
+
 const SentMessage = ({ message }: { message: string }) => {
+
+    const {state} = useAppContext();
 
     useEffect(() => {
         window.scrollTo({
-            top: document.body.scrollHeight,
+            top: state.chat.length <= 1 ? 0 :document.body.scrollHeight,
             behavior: "smooth"
         });
 
