@@ -12,6 +12,9 @@ import { useAppContext } from "@/contexts";
 
 import { useFormContext } from "react-hook-form";
 
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+
 interface SampleQuestionProps {
   question: string
 }
@@ -27,6 +30,8 @@ export const SampleQuestion = ({ question }: SampleQuestionProps) => {
   const knowledgeBase = methods.getValues("knowledgeBase");
 
   const sendSampleQuestion = async () => {
+
+    const { toast } = useToast();
 
         dispatch({
             type: ActionTypes.SET_PENDING_PROMPT,
