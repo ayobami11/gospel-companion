@@ -85,62 +85,60 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
             ) : (
               <div className="[&>ol]:list-decimal [&>ol]:list-inside">
                 <ReactMarkdown>{response}</ReactMarkdown>
-              </div>
-            )
-          }
+                <div className="flex gap-4 my-4">
+                  <CopyButton
+                    text={response}
+                    className="rounded-lg shadow-none border border-[hsl(0,0%,92%)] bg-white text-[hsl(0,0%,8%)] hover:bg-white hover:brightness-95 dark:bg-[hsl(0,0%,16%)] dark:text-white dark:border-[hsl(0,0%,18%)]"
+                  />
 
-        </div>
-        <div className="flex gap-4 my-4">
-          <CopyButton
-            text={response}
-            className="rounded-lg shadow-none border border-[hsl(0,0%,92%)] bg-white text-[hsl(0,0%,8%)] hover:bg-white hover:brightness-95 dark:bg-[hsl(0,0%,16%)] dark:text-white dark:border-[hsl(0,0%,18%)]"
-          />
+                  {/* Only the last response can be regenerated */}
+                  {
+                    index == state.chat.length - 1 ?
+                      (
+                        <Button
+                          className="rounded-lg shadow-none border border-[hsl(0,0%,92%)] bg-white text-[hsl(0,0%,8%)] hover:bg-white hover:brightness-95 dark:bg-[hsl(0,0%,16%)] dark:text-white dark:border-[hsl(0,0%,18%)]"
+                          onClick={regenerateResponse}
+                        >
+                          <RotateCw />
+                          Regenerate
+                        </Button>
 
-          {/* Only the last response can be regenerated */}
-          {
-            index == state.chat.length - 1 ?
-              (
-                <Button
-                  className="rounded-lg shadow-none border border-[hsl(0,0%,92%)] bg-white text-[hsl(0,0%,8%)] hover:bg-white hover:brightness-95 dark:bg-[hsl(0,0%,16%)] dark:text-white dark:border-[hsl(0,0%,18%)]"
-                  onClick={regenerateResponse}
-                >
-                  <RotateCw />
-                  Regenerate
-                </Button>
+                      ) : null
+                  }
+                </div>
 
-              ) : null
-          }
-        </div>
+                {/* <Separator className="bg-[hsl(0,0%,92%)] dark:bg-[hsl(0,0%,18%)] my-5" /> */}
 
-        {/* <Separator className="bg-[hsl(0,0%,92%)] dark:bg-[hsl(0,0%,18%)] my-5" /> */}
+                <div className="flex flex-wrap gap-3 items-center">
+                  <span className="text-[hsl(0,0%,54%)]">References</span>
+                  <div className="flex flex-wrap gap-3 max-w-[780px]">
+                    {references.map((reference) => {
+                      return (
+                        <Button
+                          key={reference.topic}
+                          variant="outline"
+                          asChild
+                        >
+                          <div
+                            className="flex items-center gap-2.5 py-0.5 px-2 rounded-lg"
+                          >
+                            <BookOpenText className="shrink-0" />
+                            <div>
+                              <a
+                                href={reference.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              > {reference.topic}</a>
+                            </div>
+                          </div>
+                        </Button>
 
-        <div className="flex flex-wrap gap-3 items-center">
-          <span className="text-[hsl(0,0%,54%)]">References</span>
-          <div className="flex flex-wrap gap-3 max-w-[780px]">
-            {references.map((reference) => {
-              return (
-                <Button
-                  key={reference.topic}
-                  variant="outline"
-                  asChild
-                >
-                  <div
-                    className="flex items-center gap-2.5 py-0.5 px-2 rounded-lg"
-                  >
-                    <BookOpenText className="shrink-0" />
-                    <div>
-                      <a
-                        href={reference.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      > {reference.topic}</a>
-                    </div>
+                      )
+                    })}
                   </div>
-                </Button>
-
-              )
-            })}
-          </div>
+                </div>
+              </div>
+            )}
         </div>
       </div>
     </div>
