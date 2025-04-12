@@ -5,9 +5,12 @@ const SentMessage = ({ message }: { message: string }) => {
     const sentMessageRef = useRef(null);
 
     useEffect(() => {
-        sentMessageRef.current?.scrollIntoView({
-            behaviour: "smooth"
-        });
+
+        if (sentMessageRef.current) {
+            sentMessageRef.current.scrollIntoView({
+                behaviour: "smooth"
+            });
+        }
 
     }, []);
 
