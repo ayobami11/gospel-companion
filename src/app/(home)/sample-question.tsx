@@ -1,6 +1,8 @@
 
 "use client"
 
+import {useState} from "react";
+
 import { Button } from "@/components/ui/button";
 
 import { instance as axios } from "@/lib/axios";
@@ -18,44 +20,62 @@ export const SampleQuestion = ({ question }: SampleQuestionProps) => {
 
   const { state, dispatch } = useAppContext();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const methods = useFormContext();
 
   const knowledgeBase = methods.getValues("knowledgeBase");
 
   const sendSampleQuestion = async () => {
 
-    try {
-      const { data, status } = await axios.post<RagResponse>(
-        `/rag-response/${state.userId}?query=${question}&knowledge_base=${knowledgeBase}`
-      );
-      if (status === 200) {
-
         dispatch({
-          type: ActionTypes.UPDATE_CHAT,
-          payload: {
-            question,
-            answer: data
-          }
-
+            type: ActionTypes.SET_PENDING_PROMPT,
+            payload: {
+                pendingPrompt: question
+            }
         });
 
         dispatch({
-          type: ActionTypes.SET_CHAT_VIEW,
-          payload: {
-            isNewChat: false
-          }
-        })
+            type: ActionTypes.SET_CHAT_VIEW,
+            payload: {
+                isNewChat: false
+            }
+        });
+        
+        setIsLoading(true);
 
-        methods.resetField("message");
-      } else {
-        // throw error;
-      }
-    } catch (error) {
-      console.error(`Chat Error: ${error}`);
-      // setError(error);
-    } finally {
-      // setIsLoading(false);
-    }
+        try {
+            const { data, status } = await axios.post<RagResponse>(
+                `/rag-response/${state.userId}?query=${question}&knowledge_base=${knowledgeBase}`
+            );
+
+            if (status === 200) {
+
+                dispatch({
+                    type: ActionTypes.UPDATE_CHAT,
+                    payload: {
+                        question,
+                        answer: data
+                    }
+
+                })
+
+                methods.resetField("message");
+            }
+
+        } catch (error) {
+            toast({
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem with your request.",
+                action: <ToastAction 
+                altText="Try again"
+                onClick={onSubmit}
+                >Try again</ToastAction>
+            })
+            
+        } finally {
+            setIsLoading(false);
+        }
 
   }
 

@@ -19,7 +19,7 @@ export const ChatWindow = () => {
                 state.chat.map(({ question, answer }, index) => {
 
                     return (
-                        <div key={`${index}-${question}`} className="flex flex-col gap-4 m-4">
+                        <div key={`${index}-${question}`} className="flex flex-col gap-2.5 m-4">
                             <SentMessage message={question} />
                             <Suspense fallback={<ReceivedMessageSkeleton />}>
                                 <ReceivedMessage index={index} response={answer.response} references={answer.references} />
@@ -29,7 +29,12 @@ export const ChatWindow = () => {
                 })
             }
 
-            {state.pendingPrompt.length > 0 ? <SentMessage message={state.pendingPrompt} /> : null}
+            {/* flex parent is needed for self-end prop on flex item to work */}
+            {state.pendingPrompt.length > 0 ? (
+                <div className="flex flex-col">
+                    <SentMessage message={state.pendingPrompt} />
+                </div> 
+            ) : null}
         </div>
     )
 }
