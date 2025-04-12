@@ -32,7 +32,6 @@ export const SampleQuestion = ({ question }: SampleQuestionProps) => {
 
   const sendSampleQuestion = async () => {
 
-
         dispatch({
             type: ActionTypes.SET_PENDING_PROMPT,
             payload: {
@@ -74,7 +73,7 @@ export const SampleQuestion = ({ question }: SampleQuestionProps) => {
                 description: "There was a problem with your request.",
                 action: <ToastAction 
                 altText="Try again"
-                onClick={onSubmit}
+                onClick={sendSampleQuestion}
                 >Try again</ToastAction>
             })
             
