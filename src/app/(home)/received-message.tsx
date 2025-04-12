@@ -10,7 +10,7 @@ import { References, ActionTypes, RagResponse } from "@/actions";
 
 import { instance as axios } from "@/lib/axios";
 
-import {useState} from "react"
+import { useState, useEffect } from "react"
 
 import ReactMarkdown from "react-markdown";
 
@@ -23,7 +23,6 @@ interface ReceivedMessageProps {
 }
 
 import { useAppContext } from "@/contexts";
-import { format } from "path";
 
 const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) => {
 
@@ -51,26 +50,16 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
             question,
             answer: data
           }
-
-        })
+        });
 
         methods.resetField("message");
-        // let referencesString: string = "";
-        // references?.map(
-        //     ({ topic, link }) => (referencesString += "\n" + topic + "\n" + link)
-        //     // (referencesString += [link])
-        // );
-        //response += "\n" + referencesString;
-        //const parsedResponse = { message: response };
-        // setAnswers([...answers, [question, parsedResponse]]);
-      } else {
-        // throw error;
+
+        setShowMarkdown(false);
       }
+
+
     } catch (error) {
       console.error(`Chat Error: ${error}`);
-      // setError(error);
-    } finally {
-      // setIsLoading(false);
     }
 
   }
@@ -79,25 +68,26 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
     <div className="flex gap-5 self-start py-3">
       <div>
         <div>
-        {
-          !showMarkdown ? (
-            <TypeAnimation
-              cursor={false}
-              splitter={(str) => str.split(/(?= )/)}
-              style={{ whiteSpace: "pre-line" }}
-              sequence={[
-                response,
-                3000,
-                () => setShowMarkdown(true)
-              ]}
-              speed={{ type: "keyStrokeDelayInMs", value: 30 }}
-              omitDeletionAnimation={true}
-              repeat={Infinity}
-            />
-          ) : (
-            <ReactMarkdown>{response}</ReactMarkdown>
-          )
-        }
+          {
+            !showMarkdown ? (
+              <TypeAnimation
+                cursor={false}
+                splitter={(str) => str.split(/(?= )/)}
+                style={{ whiteSpace: "pre-line" }}
+                sequence={[
+                  response,
+                  5000,
+                  () => setShowMarkdown(true)
+                ]}
+                speed={{ type: "keyStrokeDelayInMs", value: 30 }}
+                omitDeletionAnimation={true}
+              />
+            ) : (
+              <div className="[&>ol]:list-decimal [&>ol]:list-inside">
+                <ReactMarkdown>{response}</ReactMarkdown>
+              </div>
+            )
+          }
 
         </div>
         <div className="flex gap-4 my-4">

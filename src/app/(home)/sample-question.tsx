@@ -37,6 +37,13 @@ export const SampleQuestion = ({ question }: SampleQuestionProps) => {
             answer: data
           }
 
+        });
+
+        dispatch({
+          type: ActionTypes.SET_CHAT_VIEW,
+          payload: {
+            isNewChat: false
+          }
         })
 
         methods.resetField("message");

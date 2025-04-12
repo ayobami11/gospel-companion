@@ -26,9 +26,12 @@ export const reducer = (state: State, action: Actions) => {
         }
 
         case ActionTypes.GET_CHAT_HISTORY: {
+            const chat = action.payload.chat;
+
             return {
                 ...state,
-                chat: action.payload.chat
+                chat,
+                isNewChat: chat.length === 0
             }
         }
 
@@ -88,6 +91,14 @@ export const reducer = (state: State, action: Actions) => {
             }
         }
 
+        case ActionTypes.SET_CHAT_VIEW: {
+
+            return {
+                ...state,
+                isNewChat: action.payload.isNewChat
+            }
+        }
+
         default: {
             return state;
         }
@@ -98,5 +109,6 @@ export const initialState: State = {
     userId: "",
     message: "",
     chat: [],
-    pendingPrompt: ""
+    pendingPrompt: "",
+    isNewChat: true
 }

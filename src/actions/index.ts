@@ -19,7 +19,8 @@ export enum ActionTypes {
     UPDATE_MESSAGE = "UPDATE_MESSAGE",
     UPDATE_CHAT = "UPDATE_CHAT",
     SET_PENDING_PROMPT = "SET_PENDING_PROMPT",
-    REGENERATE_RESPONSE = "REGENERATE_RESPONSE"
+    REGENERATE_RESPONSE = "REGENERATE_RESPONSE",
+    SET_CHAT_VIEW = "SET_CHAT_VIEW"
 }
 
 export type SetUserIdAction = {
@@ -36,7 +37,7 @@ export type GetChatHistoryAction = {
     }
 }
 
-export type UpdateMessageFormAction = {
+export type UpdateMessageAction = {
     type: ActionTypes.UPDATE_MESSAGE,
     payload: {
         message: string
@@ -47,6 +48,7 @@ export type UpdateChatAction = {
     type: ActionTypes.UPDATE_CHAT,
     payload: ChatProps
 }
+
 export type SetPendingPromptAction = {
     type: ActionTypes.SET_PENDING_PROMPT,
     payload: {
@@ -59,4 +61,11 @@ export type RegenerateResponseAction = {
     payload: ChatProps
 }
 
-export type Actions = SetPendingPromptAction | GetChatHistoryAction | RegenerateResponseAction | SetUserIdAction | UpdateChatAction | UpdateMessageFormAction;
+export type SetChatViewAction = {
+    type: ActionTypes.SET_CHAT_VIEW,
+    payload: {
+        isNewChat: boolean
+    }
+}
+
+export type Actions = SetUserIdAction | GetChatHistoryAction | UpdateMessageAction | UpdateChatAction | SetPendingPromptAction | RegenerateResponseAction | SetChatViewAction;

@@ -49,26 +49,32 @@ export default function Home() {
 
   useEffect(() => {
 
-    const createUser = async () => {
-
-      const { data, status } = await axios.post("/create-user");
-
-      if (status === 200) {
-        sessionStorage.setItem("gospel-companion-uid", data);
-
-        dispatch({
-          type: ActionTypes.SET_USER_ID,
-          payload: {
-            userId: data
-          }
-        })
-      }
-    }
-
     const userId = sessionStorage.getItem("gospel-companion-uid");
-
+    
     if (!userId) {
+
+      const createUser = async () => {
+
+        try {
+          const { data, status } = await axios.post("/create-user");
+    
+          if (status === 200) {
+            sessionStorage.setItem("gospel-companion-uid", data);
+            
+            dispatch({
+              type: ActionTypes.SET_USER_ID,
+              payload: {
+                userId: data
+              }
+            })
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
       createUser();
+
     } else {
       dispatch({
         type: ActionTypes.SET_USER_ID,
@@ -83,47 +89,50 @@ export default function Home() {
 
   useEffect(() => {
 
-    const getChatHistory = async () => {
+       
+    if (state.userId) {
 
-      const { data, status } = await axios.get(`/get-user/${state.userId}`);
+      const getChatHistory = async () => {
 
-      if (status === 200) {
+          try {
 
-
-        const { responses, references } = data["full_history"][knowledgeBase];
-
-        const chat = responses.map((response: string[], index: number) => {
-
-          const [question, answer] = response;
-          const result = {
-            // slices out the text 'Human: ' from the string
-            question: question.slice(7),
-            answer: {
-              // slices out the text 'AI: ' from the string
-              response: answer.slice(4),
-              references: references[index]
+            const { data, status } = await axios.get(`/get-user/${state.userId}`);
+      
+            if (status === 200) {
+      
+              const { responses, references } = data["full_history"][knowledgeBase];
+      
+              const chat = responses.map((response: string[], index: number) => {
+      
+                const [question, answer] = response;
+                const result = {
+                  // slices out the text 'Human: ' from the string
+                  question: question.slice(7),
+                  answer: {
+                    // slices out the text 'AI: ' from the string
+                    response: answer.slice(4),
+                    references: references[index]
+                  }
+                }
+      
+                return result;
+              });
+      
+              dispatch({
+                type: ActionTypes.GET_CHAT_HISTORY,
+                payload: {
+                  chat
+                }
+              })
             }
-          }
-
-          return result;
-        });
-
-        dispatch({
-          type: ActionTypes.GET_CHAT_HISTORY,
-          payload: {
-            chat
-          }
-        })
+      } catch (error) {
+          console.log(error);
       }
     }
 
-    const userId = sessionStorage.getItem("gospel-companion-uid");
-
-    if (userId) {
-      getChatHistory();
-    }
-
-  }, [dispatch, knowledgeBase, state.userId]);
+    getChatHistory();
+  } 
+}, [dispatch, knowledgeBase, state.userId]);
 
 
   return (
@@ -134,11 +143,15 @@ export default function Home() {
         <main className="flex-1 mt-32 md:mt-20">
           <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-68px)]">
             <div className="flex-1">
-              {state.chat.length > 0 || state.pendingPrompt.length > 0 ? (
+              {
+              state.isNewChat ? (
+                <NewChat />
+              ): (
                 <Suspense fallback={<ChatWindowSkeleton />}>
                   <ChatWindow />
                 </Suspense>
-               ) : <NewChat />}
+              )
+            }
             </div>
 
             <MessageForm />

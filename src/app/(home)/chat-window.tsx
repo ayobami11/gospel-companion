@@ -1,9 +1,13 @@
 "use client"
 
+import {Suspense} from "react";
+
 import { useAppContext } from "@/contexts";
 
 import SentMessage from "@/app/(home)/sent-message";
 import ReceivedMessage from "@/app/(home)/received-message";
+import ReceivedMessageSkeleton from "@/app/(home)/received-message-skeleton";
+
 
 export const ChatWindow = () => {
 
@@ -17,7 +21,9 @@ export const ChatWindow = () => {
                     return (
                         <div key={`${index}-${question}`} className="flex flex-col gap-4 m-4">
                             <SentMessage message={question} />
-                            <ReceivedMessage index={index} response={answer.response} references={answer.references} />
+                            <Suspense fallback={<ReceivedMessageSkeleton />}>
+                                <ReceivedMessage index={index} response={answer.response} references={answer.references} />
+                            </Suspense>
                         </div>
                     )
                 })

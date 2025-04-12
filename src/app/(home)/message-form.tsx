@@ -38,14 +38,29 @@ export const MessageForm = () => {
     const question = methods.getValues("message");
     const knowledgeBase = methods.getValues("knowledgeBase");
 
+    const clearMessageField = () => {
+        dispatch({
+            type: ActionTypes.UPDATE_MESSAGE,
+            payload: {
+                message: ""
+            }
+        });
+    }
+
 
     async function onSubmit() {
-
 
         dispatch({
             type: ActionTypes.SET_PENDING_PROMPT,
             payload: {
                 pendingPrompt: question
+            }
+        });
+
+        dispatch({
+            type: ActionTypes.SET_CHAT_VIEW,
+            payload: {
+                isNewChat: false
             }
         });
         
@@ -55,6 +70,7 @@ export const MessageForm = () => {
             const { data, status } = await axios.post<RagResponse>(
                 `/rag-response/${state.userId}?query=${question}&knowledge_base=${knowledgeBase}`
             );
+
             if (status === 200) {
 
                 dispatch({
@@ -67,19 +83,9 @@ export const MessageForm = () => {
                 })
 
                 methods.resetField("message");
-                // let referencesString: string = "";
-                // references?.map(
-                //     ({ topic, link }) => (referencesString += "\n" + topic + "\n" + link)
-                //     // (referencesString += [link])
-                // );
-                //response += "\n" + referencesString;
-                //const parsedResponse = { message: response };
-                // setAnswers([...answers, [question, parsedResponse]]);
-            } else {
-                // throw error;
             }
+
         } catch (error) {
-            console.error(`Chat Error: ${error}`);
             toast({
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request.",
@@ -88,7 +94,7 @@ export const MessageForm = () => {
                 onClick={onSubmit}
                 >Try again</ToastAction>
             })
-            // setError(error);
+            
         } finally {
             setIsLoading(false);
         }
@@ -115,7 +121,6 @@ export const MessageForm = () => {
                                         placeholder="Write a message here..."
                                         minHeight={35}
                                         maxHeight={200}
-                                        // onChange={(event) => handleMessageChange(event.target.value)}
                                         className="flex-1 resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
                                         {...field}
                                     />
@@ -129,6 +134,7 @@ export const MessageForm = () => {
                             type="submit"
                             className="rounded-[0.625rem] p-2"
                             disabled={isLoading}
+                            onClick={clearMessageField}
                         >
                             <Send />
                             <span className="sr-only">Send message</span>
