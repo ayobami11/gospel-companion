@@ -66,12 +66,13 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
     
   }
 
-  useEffect(() => {
-      window.scrollTo({
-            top: document.body.scrollHeight,
+    useEffect(() => {
+        window.scrollTo({
+            top: state.chat.length <= 1 ? 0 : document.body.scrollHeight,
             behavior: "smooth"
         });
-  }, [showMarkdown]);
+
+    }, []);
   
   return (
     <div 
@@ -86,7 +87,7 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
               style={{ whiteSpace: "pre-line" }}
               sequence={[
                 response,
-                Math.min(keyStrokeDelayInMs * response.length, 5000),
+                Math.min(keyStrokeDelayInMs * response.length, 3000),
                 () => setShowMarkdown(true)
               ]}
               speed={{ type: "keyStrokeDelayInMs", value: keyStrokeDelayInMs }}
@@ -133,14 +134,13 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
                           className="flex items-center gap-2.5 py-0.5 px-2 rounded-lg"
                         >
                           <BookOpenText className="shrink-0" />
-                          <div>
-                            <a
-                              href={reference.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            > {reference.topic}</a>
+                          <a
+                            href={reference.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="min-w-0 wrap-anywhere inline-block"
+                          > {reference.topic}</a>
                           </div>
-                        </div>
                       </Button>
 
                     )

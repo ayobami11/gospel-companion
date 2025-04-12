@@ -8,7 +8,7 @@ const SentMessage = ({ message }: { message: string }) => {
 
     useEffect(() => {
         window.scrollTo({
-            top: state.chat.length <= 1 ? 0 :document.body.scrollHeight,
+            top: state.chat.length <= 1 ? 0 : document.body.scrollHeight,
             behavior: "smooth"
         });
 
