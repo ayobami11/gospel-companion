@@ -94,8 +94,13 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
               omitDeletionAnimation={true}
             />
           ) : (
-            <div className="[&>ol]:list-decimal [&>ol]:list-inside">
-              <ReactMarkdown>{response}</ReactMarkdown>
+            <div className="whitespace-pre-line">
+              <ReactMarkdown
+                components={{
+                  ul: ({children}) => <ul className="list-disc list-inside">{children}</ul>,
+                  ol: ({children}) => <ol className="list-decimal list-inside">{children}</ol>
+                }}
+              >{response}</ReactMarkdown>
               <div className="flex gap-4 my-4">
                 <CopyButton
                   text={response}
