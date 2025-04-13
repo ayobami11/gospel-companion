@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/app/(home)/mode-toggle";
-import { KnowledgeBase } from "./knowledge-base";
+import { KnowledgeBase } from "@/app/(home)/knowledge-base";
 
 export const Header = () => {
 

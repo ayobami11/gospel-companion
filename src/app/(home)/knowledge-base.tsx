@@ -1,3 +1,5 @@
+import { useFormContext } from "react-hook-form";
+
 import {
     Select,
     SelectContent,
@@ -14,7 +16,6 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 
-import { useFormContext } from "react-hook-form";
 
 export const KnowledgeBase = () => {
 

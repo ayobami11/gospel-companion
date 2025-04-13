@@ -19,7 +19,7 @@ export const ChatWindow = () => {
                 state.chat.map(({ question, answer }, index) => {
 
                     return (
-                        <div key={`${index}-${question}`} className="flex flex-col gap-2.5 m-4">
+                        <div key={`${index}-${question}`} className="flex flex-col gap-2.5 m-4 max-w-full">
                             <SentMessage message={question} />
                             <Suspense fallback={<ReceivedMessageSkeleton />}>
                                 <ReceivedMessage index={index} response={answer.response} references={answer.references} />

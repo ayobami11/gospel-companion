@@ -2,6 +2,12 @@
 
 import { useState } from "react";
 
+import { useAppContext } from "@/contexts";
+
+import { useFormContext } from "react-hook-form";
+
+import { ActionTypes, RagResponse } from "@/actions";
+
 import {
     Form,
     FormControl,
@@ -12,18 +18,13 @@ import {
 
 import { AutosizeTextarea } from "@/components/ui/autosize-textarea";
 import { Button } from "@/components/ui/button";
+import { ToastAction } from "@/components/ui/toast";
 
 import { Send } from "lucide-react";
 
 import { instance as axios } from "@/lib/axios";
 
-import { useAppContext } from "@/contexts";
-import { ActionTypes, RagResponse } from "@/actions";
-
-import { useFormContext } from "react-hook-form";
-
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 
 export const MessageForm = () => {
 
@@ -63,7 +64,7 @@ export const MessageForm = () => {
                 isNewChat: false
             }
         });
-        
+
         setIsLoading(true);
 
         try {
@@ -89,12 +90,12 @@ export const MessageForm = () => {
             toast({
                 title: "Uh oh! Something went wrong.",
                 description: "There was a problem with your request.",
-                action: <ToastAction 
-                altText="Try again"
-                onClick={onSubmit}
+                action: <ToastAction
+                    altText="Try again"
+                    onClick={onSubmit}
                 >Try again</ToastAction>
             })
-            
+
         } finally {
             setIsLoading(false);
         }
