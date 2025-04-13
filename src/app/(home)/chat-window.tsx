@@ -14,7 +14,7 @@ export const ChatWindow = () => {
     const { state } = useAppContext();
    
     return (
-        <div className="max-w-full">
+        <div>
             {
                 state.chat.map(({ question, answer }, index) => {
 

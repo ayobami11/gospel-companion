@@ -23,7 +23,8 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
-      <body>
+      {/* styles required to prevent horizontal scrolling */}
+      <body className="max-w-full overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
