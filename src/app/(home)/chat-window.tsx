@@ -14,12 +14,12 @@ export const ChatWindow = () => {
     const { state } = useAppContext();
    
     return (
-        <div>
+        <div className="max-w-full">
             {
                 state.chat.map(({ question, answer }, index) => {
 
                     return (
-                        <div key={`${index}-${question}`} className="flex flex-col gap-2.5 m-4 max-w-full">
+                        <div key={`${index}-${question}`} className="flex flex-col gap-2.5 m-4">
                             <SentMessage message={question} />
                             <Suspense fallback={<ReceivedMessageSkeleton />}>
                                 <ReceivedMessage index={index} response={answer.response} references={answer.references} />
