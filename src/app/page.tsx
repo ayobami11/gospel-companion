@@ -44,7 +44,6 @@ export default function Home() {
 
   const searchParams = useSearchParams();
 
-
     const inputKnowledgeBase = searchParams.get("knowledge_base");
     const selectedKnowledgeBase = validKnowledgeBaseValues.includes(inputKnowledgeBase?.toLowerCase() ?? "") ? searchParams.get("knowledge_base") : "j";
 

@@ -17,7 +17,7 @@ export const NewChat = () => {
                 {
                     sampleQuestions.map((question, index) => {
                         return (
-                            <li key={`sample-question-${index}`}>
+                            <li className="min-w-0" key={`sample-question-${index}`}>
                                 <SampleQuestion question={question} />
                             </li>
                         )

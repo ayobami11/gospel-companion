@@ -91,11 +91,11 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
                 500,
                 () => setShowMarkdown(true)
               ]}
-              speed={{ type: "keyStrokeDelayInMs", value: 30 }}
+              speed={{ type: "keyStrokeDelayInMs", value: 50 }}
               omitDeletionAnimation={true}
             />
           ) : (
-            <>
+            <div className="w-full max-w-full break-words overflow-hidden">
               <ReactMarkdown
                 components={{
                   p: ({ children }) => <p className="my-2">{children}</p>,
@@ -164,7 +164,7 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
                   })}
                 </div>
               </div>
-            </>
+            </div>
           )}
       </div>
     </div>
