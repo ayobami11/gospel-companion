@@ -1,8 +1,6 @@
 "use client"
 
-import { useEffect } from "react";
-
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useFormContext } from "react-hook-form";
 
@@ -22,35 +20,16 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 
-const validKnowledgeBaseValues = ["e", "j", "s"];
-
 export const KnowledgeBase = () => {
 
     const router = useRouter();
 
-    const searchParams = useSearchParams();
-
     const methods = useFormContext();
-
-    const { setValue, control } = methods;
-
-    // timeout of 0 is necessary to ensure the field is registered before setValue is called
-    useEffect(() => {
-        const inputKnowledgeBase = searchParams.get("knowledge_base");
-        const selectedKnowledgeBase = validKnowledgeBaseValues.includes(inputKnowledgeBase?.toLowerCase() ?? "") ? searchParams.get("knowledge_base") : "j";
-
-        const timeout = setTimeout(() => {
-            setValue("knowledgeBase", selectedKnowledgeBase);
-        }, 0);
-
-        return () => clearTimeout(timeout);
-    }, [searchParams, setValue]);
-
 
     return (
         <Form {...methods}>
             <FormField
-                control={control}
+                control={methods.control}
                 name="knowledgeBase"
                 render={({ field }) => (
                     <FormItem className="flex-1">

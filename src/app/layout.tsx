@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/contexts/theme-provider";
 import { AppContextProvider } from "@/contexts";
 
 import { Toaster } from "@/components/ui/toaster";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Gospel Companion",
@@ -30,7 +31,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AppContextProvider>
-            {children}
+            <Suspense>
+              {children}
+            </Suspense>
 
             <Toaster />
           </AppContextProvider>

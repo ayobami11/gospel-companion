@@ -2,6 +2,8 @@
 
 import { useEffect, Suspense } from "react";
 
+import { useSearchParams } from "next/navigation";
+
 import { useAppContext } from "@/contexts";
 
 import { FormProvider } from "react-hook-form";
@@ -22,6 +24,8 @@ import { ActionTypes } from "@/actions"
 
 import { ChatWindowSkeleton } from "@/app/(home)/chat-window-skeleton";
 
+const validKnowledgeBaseValues = ["e", "j", "s"];
+type KnowledgeBaseValues = "e" | "j" | "s";
 
 const messageFormSchema = z.object({
   knowledgeBase: z.enum(["e", "j", "s"], {
@@ -38,13 +42,19 @@ export default function Home() {
 
   const { state, dispatch } = useAppContext();
 
-  const methods = useForm<z.infer<typeof messageFormSchema>>({
-    resolver: zodResolver(messageFormSchema),
-    defaultValues: {
-      message: "",
-      knowledgeBase: "j"
-    },
-  });
+  const searchParams = useSearchParams();
+
+
+    const inputKnowledgeBase = searchParams.get("knowledge_base");
+    const selectedKnowledgeBase = validKnowledgeBaseValues.includes(inputKnowledgeBase?.toLowerCase() ?? "") ? searchParams.get("knowledge_base") : "j";
+
+    const methods = useForm<z.infer<typeof messageFormSchema>>({
+      resolver: zodResolver(messageFormSchema),
+      defaultValues: {
+        message: "",
+        knowledgeBase: selectedKnowledgeBase as KnowledgeBaseValues
+      },
+    });
 
   const knowledgeBase = methods.getValues("knowledgeBase");
 

@@ -1,22 +1,23 @@
+import { useState, useEffect } from "react";
+
+import { useFormContext } from "react-hook-form";
+
+import { TypeAnimation } from "react-type-animation";
+
+import ReactMarkdown from "react-markdown";
+
+import remarkGfm from "remark-gfm";
+
 import { BookOpenText, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // import { Separator } from "@/components/ui/separator";
 
-import { TypeAnimation } from "react-type-animation";
 
 import CopyButton from "@/app/(home)/copy-button";
 
 import { References, ActionTypes, RagResponse } from "@/actions";
 
 import { instance as axios } from "@/lib/axios";
-
-import { useState, useEffect } from "react"
-
-import ReactMarkdown from "react-markdown";
-
-import { useFormContext } from "react-hook-form";
-
-import remarkGfm from "remark-gfm";
 
 interface ReceivedMessageProps {
   index: number,
@@ -25,8 +26,6 @@ interface ReceivedMessageProps {
 }
 
 import { useAppContext } from "@/contexts";
-
-const keyStrokeDelayInMs = 30;
 
 const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) => {
 
@@ -89,10 +88,10 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
               style={{ whiteSpace: "pre-line" }}
               sequence={[
                 response,
-                Math.min(keyStrokeDelayInMs * response.length, 3000),
+                500,
                 () => setShowMarkdown(true)
               ]}
-              speed={{ type: "keyStrokeDelayInMs", value: keyStrokeDelayInMs }}
+              speed={{ type: "keyStrokeDelayInMs", value: 30 }}
               omitDeletionAnimation={true}
             />
           ) : (
