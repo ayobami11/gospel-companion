@@ -76,10 +76,7 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
   }, [state.chat.length]);
 
   return (
-    <div
-      className="flex gap-5 self-start py-3"
-    >
-      <div>
+    <div>
         {
           !showMarkdown ? (
             <TypeAnimation
@@ -91,11 +88,11 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
                 500,
                 () => setShowMarkdown(true)
               ]}
-              speed={{ type: "keyStrokeDelayInMs", value: 50 }}
+              speed={{ type: "keyStrokeDelayInMs", value: 30 }}
               omitDeletionAnimation={true}
             />
           ) : (
-            <div className="w-full max-w-full break-words overflow-hidden">
+            <div className="w-full max-w-full break-words">
               <ReactMarkdown
                 components={{
                   p: ({ children }) => <p className="my-2">{children}</p>,
@@ -139,7 +136,7 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
 
               <div className="flex flex-wrap gap-3 items-center">
                 <span className="text-[hsl(0,0%,54%)]">References</span>
-                <div className="flex flex-wrap gap-3 max-w-[780px]">
+                <div className="overflow-hidden flex flex-wrap gap-3 max-w-[780px]">
                   {references.map((reference) => {
                     return (
                       <Button
@@ -148,14 +145,14 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
                         asChild
                       >
                         <div
-                          className="flex items-center gap-2.5 py-0.5 px-2 rounded-lg"
+                          className="w-full max-w-fit flex items-center gap-2.5 py-0.5 px-2 rounded-lg"
                         >
                           <BookOpenText className="shrink-0" />
                           <a
                             href={reference.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="min-w-0 wrap-anywhere inline-block"
+                            className="flex-1 whitespace-nowrap text-ellipsis overflow-hidden"
                           > {reference.topic}</a>
                         </div>
                       </Button>
@@ -166,7 +163,6 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
               </div>
             </div>
           )}
-      </div>
     </div>
   )
 }
