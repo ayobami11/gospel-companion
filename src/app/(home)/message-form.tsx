@@ -102,7 +102,7 @@ export const MessageForm = () => {
     }
 
     return (
-        <div className="sticky bottom-0 max-w-[920px] w-full md:left-[calc(50%+310px)] bg-white dark:bg-[hsl(0,2%,6.5%)]">
+        <div className="sticky bottom-0 max-w-[920px] w-full md:left-[calc(50%+310px)] bg-white dark:bg-[hsl(0,0%,12.90%)]">
             <Form {...methods}>
                 <form
                     id="message-form"
