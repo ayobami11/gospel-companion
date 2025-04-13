@@ -99,9 +99,9 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
             <>
               <ReactMarkdown
                 components={{
-                  p: ({ children }) => <p className="my-1.5">{children}</p>,
-                  ul: ({ children }) => <ul className="list-disc list-inside [&_p]:inline">{children}</ul>,
-                  ol: ({ children }) => <ol className="list-decimal list-inside [&_p]:inline">{children}</ol>,
+                  p: ({ children }) => <p className="my-2">{children}</p>,
+                  ul: ({ children }) => <ul className="list-disc list-inside space-y-1 [&_p]:inline">{children}</ul>,
+                  ol: ({ children }) => <ol className="list-decimal list-inside space-y-1 [&_p]:inline">{children}</ol>,
                   a: ({ children, href }) => <a
                     href={href}
                     target="_blank"
