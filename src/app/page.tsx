@@ -22,8 +22,6 @@ import { instance as axios } from "@/lib/axios";
 
 import { ActionTypes } from "@/actions"
 
-import { ChatWindowSkeleton } from "@/app/(home)/chat-window-skeleton";
-
 const validKnowledgeBaseValues = ["e", "j", "s"];
 type KnowledgeBaseValues = "e" | "j" | "s";
 
@@ -153,15 +151,7 @@ export default function Home() {
         <main className="flex-1 mt-32 md:mt-20">
           <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-68px)]">
             <div className="flex-1">
-              {
-                state.isNewChat ? (
-                  <NewChat />
-                ) : (
-                  <Suspense fallback={<ChatWindowSkeleton />}>
-                    <ChatWindow />
-                  </Suspense>
-                )
-              }
+              {state.isNewChat ? <NewChat /> : <ChatWindow />}
             </div>
 
             <MessageForm />

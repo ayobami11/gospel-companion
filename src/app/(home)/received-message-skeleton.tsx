@@ -2,9 +2,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const ReceivedMessageSkeleton = () => {
     return (
-        <div>
-
-            <Skeleton className="m-4 h-24 w-full flex-1 rounded-[1.25rem] rounded-ee-none self-end py-3 px-4" />
+        <div className="flex gap-2">
+            <Skeleton className="h-2 w-2 rounded-full bg-neutral-200/30 invert dark:invert-0" />
+            <Skeleton className="h-2 w-2 rounded-full bg-neutral-200/30 invert dark:invert-0" />
+            <Skeleton className="h-2 w-2 rounded-full bg-neutral-200/30 invert dark:invert-0" />
         </div>
     )
 }
