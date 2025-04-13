@@ -31,14 +31,14 @@ export const KnowledgeBase = () => {
     const searchParams = useSearchParams();
 
     const methods = useFormContext();
-    
-    const {setValue, control} = methods;
-    
+
+    const { setValue, control } = methods;
+
     // timeout of 0 is necessary to ensure the field is registered before setValue is called
     useEffect(() => {
         const inputKnowledgeBase = searchParams.get("knowledge_base");
         const selectedKnowledgeBase = validKnowledgeBaseValues.includes(inputKnowledgeBase?.toLowerCase() ?? "") ? searchParams.get("knowledge_base") : "j";
-        
+
         const timeout = setTimeout(() => {
             setValue("knowledgeBase", selectedKnowledgeBase);
         }, 0);

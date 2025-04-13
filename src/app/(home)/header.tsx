@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { ModeToggle } from "@/app/(home)/mode-toggle";
 import { KnowledgeBase } from "@/app/(home)/knowledge-base";
 
@@ -8,11 +10,13 @@ export const Header = () => {
             <div className="flex flex-col items-center gap-4 md:flex-row">
                 <h1 className="font-bold text-[2rem] dark:text-stone-50">Gospel Companion</h1>
 
-                <div className="flex gap-4 w-fit md:ml-auto">
-                    <KnowledgeBase />
+                <Suspense>
+                    <div className="flex gap-4 w-fit md:ml-auto">
+                        <KnowledgeBase />
 
-                    <ModeToggle />
-                </div>
+                        <ModeToggle />
+                    </div>
+                </Suspense>
             </div>
         </header>
     )
