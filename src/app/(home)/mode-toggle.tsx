@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { useState, useEffect } from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -15,7 +15,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function ModeToggle() {
-    const { theme, setTheme } = useTheme()
+
+    // Needed to avoid hydration mismatch: https://github.com/pacocoursey/next-themes?tab=readme-ov-file#avoid-hydration-mismatch
+    const [isMounted, setIsMounted] = useState(false);
+
+    const { theme, setTheme } = useTheme();
+
+    // useEffect only runs on the client, so we can now safely show the UI
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
 
     return (
         <DropdownMenu>
