@@ -146,7 +146,7 @@ export const MessageForm = () => {
                 </Form>
 
 
-                <p className="text-sm text-center pt-2">Responses may lack enough context. Check linked references.</p>
+                <p className="text-sm text-center pt-2">Responses could be wrong. Check references.</p>
             </div>
         </div>
     )
