@@ -123,7 +123,7 @@ export const MessageForm = () => {
                                             placeholder="Write a message here..."
                                             minHeight={35}
                                             maxHeight={200}
-                                            className="flex-1 border border-[hsl(0,0%,23%)] resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                                            className="flex-1 dark:border-[hsl(0,0%,23%)] resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
                                             {...field}
                                         />
                                     </FormControl>
