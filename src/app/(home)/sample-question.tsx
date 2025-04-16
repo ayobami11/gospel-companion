@@ -87,7 +87,7 @@ export const SampleQuestion = ({ question }: SampleQuestionProps) => {
     return (
         <Button
             variant="outline"
-            className="p-2.5 rounded-[100px] text-base"
+            className="p-2.5 rounded-[100px] text-base dark:border-[hsl(0,0%,23%)]"
             onClick={sendSampleQuestion}
         >{question}</Button>
     )

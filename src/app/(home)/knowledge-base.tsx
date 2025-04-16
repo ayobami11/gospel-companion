@@ -38,7 +38,7 @@ export const KnowledgeBase = () => {
                             defaultValue={field.value}
                         >
                             <FormControl>
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger className="w-[180px] dark:border-[hsl(0,0%,23%)]">
                                     <SelectValue placeholder="Knowledge base" />
                                 </SelectTrigger>
                             </FormControl>

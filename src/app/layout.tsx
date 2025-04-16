@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 
 import { ThemeProvider } from "@/contexts/theme-provider";
@@ -10,8 +9,7 @@ import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Gospel Companion",
-  description: "A cutting-edge digital assistant designed to enhance the experience of studying bible lessons and gospel materials.",
-  viewport: "width=device-width, initial-scale=1.0"
+  description: "A cutting-edge digital assistant designed to enhance the experience of studying bible lessons and gospel materials."
 };
 
 export default function RootLayout({
