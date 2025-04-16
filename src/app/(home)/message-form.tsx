@@ -104,7 +104,7 @@ export const MessageForm = () => {
 
     return (
         <div className="sticky bottom-0 max-w-[920px] w-full md:left-[calc(50%+310px)] bg-white dark:bg-[hsl(0,0%,12.90%)]">
-            <div className="p-2 mx-3 my-0">
+            <div className="p-2 mx-3 mt-0 mb-1">
                 <Form {...methods}>
                     <form
                         id="message-form"
@@ -146,7 +146,7 @@ export const MessageForm = () => {
                 </Form>
 
 
-                <p className="text-sm text-center pt-2">Responses could be wrong. Check references.</p>
+                <p className="text-sm text-center pt-2">Responses can be wrong. Check references.</p>
             </div>
         </div>
     )
