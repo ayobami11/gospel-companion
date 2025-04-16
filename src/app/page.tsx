@@ -144,12 +144,12 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col">
       <FormProvider {...methods}>
         <Header />
 
         <main className="flex-1 mt-32 md:mt-20">
-          <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-68px)]">
+          <div className="max-w-[930px] mx-auto flex flex-col min-h-[calc(100vh-80px)]">
             <div className="flex-1">
               {state.isNewChat ? <NewChat /> : <ChatWindow />}
             </div>

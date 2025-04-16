@@ -104,45 +104,50 @@ export const MessageForm = () => {
 
     return (
         <div className="sticky bottom-0 max-w-[920px] w-full md:left-[calc(50%+310px)] bg-white dark:bg-[hsl(0,0%,12.90%)]">
-            <Form {...methods}>
-                <form
-                    id="message-form"
-                    method="POST"
-                    onSubmit={methods.handleSubmit(onSubmit)}
-                    className="p-2 m-5 mt-0 flex rounded-2xl"
-                >
-                    <FormField
-                        control={methods.control}
-                        name="message"
-                        render={({ field }) => (
-                            <FormItem className="flex-1">
-                                <FormControl>
-                                    <AutosizeTextarea
-                                        id="message"
-                                        placeholder="Write a message here..."
-                                        minHeight={35}
-                                        maxHeight={200}
-                                        className="flex-1 resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <div className="flex items-end ml-3">
-                        <Button
-                            type="submit"
-                            className="rounded-[0.625rem] p-2"
-                            disabled={isLoading}
-                            onClick={clearMessageField}
-                        >
-                            <Send />
-                            <span className="sr-only">Send message</span>
-                        </Button>
-                    </div>
-                </form >
-            </Form>
+            <div className="p-2 mx-3 my-0">
+                <Form {...methods}>
+                    <form
+                        id="message-form"
+                        method="POST"
+                        onSubmit={methods.handleSubmit(onSubmit)}
+                        className="flex rounded-2xl"
+                    >
+                        <FormField
+                            control={methods.control}
+                            name="message"
+                            render={({ field }) => (
+                                <FormItem className="flex-1">
+                                    <FormControl>
+                                        <AutosizeTextarea
+                                            id="message"
+                                            placeholder="Write a message here..."
+                                            minHeight={35}
+                                            maxHeight={200}
+                                            className="flex-1 resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <div className="flex items-end ml-3">
+                            <Button
+                                type="submit"
+                                className="rounded-[0.625rem] p-2"
+                                disabled={isLoading}
+                                onClick={clearMessageField}
+                            >
+                                <Send />
+                                <span className="sr-only">Send message</span>
+                            </Button>
+                        </div>
+                    </form >
+                </Form>
+
+
+                <p className="text-sm text-center pt-2">Responses may lack enough context. Check linked references.</p>
+            </div>
         </div>
     )
 }
