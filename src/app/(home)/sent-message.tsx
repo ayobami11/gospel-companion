@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { useAppContext } from "@/contexts";
 
-const SentMessage = ({ message }: { message: string }) => {
+export const SentMessage = ({ message }: { message: string }) => {
 
     const { state } = useAppContext();
 
@@ -21,5 +21,3 @@ const SentMessage = ({ message }: { message: string }) => {
         </div>
     )
 }
-
-export default SentMessage;

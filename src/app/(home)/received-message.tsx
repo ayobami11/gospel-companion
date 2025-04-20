@@ -27,7 +27,7 @@ interface ReceivedMessageProps {
 
 import { useAppContext } from "@/contexts";
 
-const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) => {
+export const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) => {
 
   const [showMarkdown, setShowMarkdown] = useState(false);
 
@@ -168,5 +168,3 @@ const ReceivedMessage = ({ index, response, references }: ReceivedMessageProps) 
     </div>
   )
 }
-
-export default ReceivedMessage;

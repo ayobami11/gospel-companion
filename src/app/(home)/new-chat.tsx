@@ -1,5 +1,3 @@
-"use client"
-
 import { SampleQuestion } from "@/app/(home)/sample-question";
 
 export const NewChat = () => {
